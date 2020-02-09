@@ -31,7 +31,7 @@ import javax.annotation.Resource;
 public class OrderServiceImpl implements OrderService {
 
     @Resource
-    UserService userService;
+    private UserService userService;
 
     @Override
     public void initOrder(Integer userId) {
