@@ -15,16 +15,28 @@
     <dubbo:protocol name="dubbo" port="20880" />
 
     <!-- 4.声明需要暴露的服务接口  ref:指定服务真正的实现对象 -->
-    <dubbo:service interface="com.sunny.dubbo.facade.UserService" ref="userService" />
+    <dubbo:service interface="com.sunny.dubbo.facade.UserService" ref="userServiceImpl" version="1.0.0">
+        <dubbo:method name="getUserAddressListByUserId" timeout="1000"/>
+    </dubbo:service>
 
     <!-- 5.和本地bean一样,服务的实现 -->
-    <bean id="userService" class="com.sunny.dubbo.serviceimpl.UserServiceImpl" />
+    <bean id="userServiceImpl" class="com.sunny.dubbo.serviceimpl.UserServiceImpl" />
+
+
+
+    <dubbo:service interface="com.sunny.dubbo.facade.UserService" ref="userServiceImpl2" version="2.0.0">
+        <dubbo:method name="getUserAddressListByUserId" timeout="1000"/>
+    </dubbo:service>
+
+    <bean id="userServiceImpl2" class="com.sunny.dubbo.serviceimpl.UserServiceImpl2" />
+
+
 
     <!-- 配置监控中心 -->
     <!-- 监控中心协议，如果为protocol="registry"，表示从注册中心发现监控中心地址，否则直连监控中心。-->
     <dubbo:monitor protocol="registry"/>
 
     <!-- 提供者默认全局配置-->
-    <!-- id默认为dubbo,protocol默认为dubbo,timeout默认为1000,proxy默认为javassist -->
-    <dubbo:provider id="dubbo" protocol="dubbo" timeout="1000" proxy="javassist"/>
+    <!-- protocol默认为dubbo,timeout默认为1000,proxy默认为javassist -->
+    <dubbo:provider protocol="dubbo" timeout="1000" proxy="javassist"/>
 </beans>
